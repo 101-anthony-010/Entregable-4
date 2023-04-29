@@ -4,6 +4,7 @@ import UserList from './components/UserList'
 import Modal from './components/Modal'
 import Header from './components/Header'
 import { useForm } from 'react-hook-form'
+import DeleteCard from './components/DeleteCard'
 
 const BASE_URL = "https://users-crud.academlo.tech"
 const DEFAULT_VALUES = {
@@ -16,12 +17,12 @@ const DEFAULT_VALUES = {
 function App() {
 
   const [isShowForm, setIsShowForm] = useState(false)
+  const [cancelDelete, setCancelDelete] = useState(false)
   const [users, setUsers] = useState([])
   const [idUserToEdit, setIdUserToEdit] = useState()
   const {register, handleSubmit, reset, formState: { errors }} = useForm()
   
   const submit = (data) => {
-    console.log(data)
     if (idUserToEdit){
       editUser(data)
     } else {
@@ -41,7 +42,8 @@ function App() {
   }
 
   const deleteUser = (id) => {
-    const URL = BASE_URL + `/users/${id}` 
+    const URL = BASE_URL + `/users/${id}`
+    setCancelDelete(!cancelDelete)
     axios.delete(URL)
       .then(() => getAllUsers())
       .catch((err) => console.log(err))
@@ -73,6 +75,10 @@ function App() {
     setIdUserToEdit(data.id)
   }
 
+  const handleCancelDelete = () => {
+    setCancelDelete(false)
+  }
+
   useEffect(() => {
     getAllUsers()
   }, [])
@@ -82,7 +88,7 @@ function App() {
       <UserList 
         users={users} 
         deleteUser={deleteUser} 
-        handleClickToEdit={handleClickToEdit}  
+        handleClickToEdit={handleClickToEdit}
       />      
       <Modal 
         submit={submit} 
@@ -93,6 +99,11 @@ function App() {
         reset={reset}
         idUserToEdit={idUserToEdit}
         setIdUserToEdit={setIdUserToEdit}
+        errors={errors}
+      />
+      <DeleteCard
+        cancelDelete={cancelDelete}
+        handleCancelDelete={handleCancelDelete}
       />
     </main>
   )

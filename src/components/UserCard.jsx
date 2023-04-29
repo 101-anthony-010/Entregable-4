@@ -1,5 +1,3 @@
-import React from 'react'
-
 const UserCard = ({user, deleteUser, handleClickToEdit}) => {
   return (
     <article className='border p-2 rounded-md'>
@@ -13,8 +11,8 @@ const UserCard = ({user, deleteUser, handleClickToEdit}) => {
             <p className='flex justify-start items-center gap-2'><box-icon name='gift'></box-icon>{user.birthday}</p>
         </div>
         <div className='flex gap-3 justify-end pt-2'>
-            <span onClick={() => deleteUser(user.id)} className='bg-red-500/80 pt-1 px-1 rounded-sm'><box-icon name='trash' animation='tada-hover' color='white'></box-icon></span>
-            <span onClick={() => handleClickToEdit(user)} className='border px-1 pt-1 rounded-sm'><box-icon name='pencil' animation='tada-hover' color='gray'></box-icon></span>
+            <span onClick={() => deleteUser(user.id)} className='bg-red-500/80 pt-1 px-1 rounded-sm cursor-pointer'><box-icon name='trash' animation='tada-hover' color='white'></box-icon></span>
+            <span onClick={() => handleClickToEdit(user)} className='border px-1 pt-1 rounded-sm cursor-pointer'><box-icon name='pencil' animation='tada-hover' color='gray'></box-icon></span>
         </div>
     </article>
   )
